@@ -16,6 +16,8 @@ def download_image(filename:str, url:str):
     with open(filename, 'wb') as f:
         f.write(res.content)
 
+os.makedirs('thumbnails', exist_ok=True)
+
 if __name__ == "__main__":
     existed = set()
     result = []
