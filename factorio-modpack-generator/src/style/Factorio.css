@@ -1,0 +1,186 @@
+@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0");
+
+:root {
+    --color-accent : rgb(235, 132, 43);
+    --color-accent-sub : rgb(253, 229, 191);
+    --color-light-grey : rgb(65, 64, 64);
+    --color-lighter-grey : rgb(132, 132, 132);
+    --color-dark-grey : rgb(36, 35, 36);
+    --color-textplace : rgb(233, 232, 229);
+    --color-background : rgb(49, 48, 49);
+}
+
+body {
+    background-color: var(--color-background);
+    color: white;
+}
+
+h2 { 
+    color : var(--color-accent);
+    text-shadow: 3px 3px 2px rgb(32, 32, 32);
+    margin: 0px;
+}
+
+p {
+    margin : 0px;
+}
+
+p.title {
+    color: var(--color-accent-sub);
+    font-weight : bold;
+}
+
+p.grey {
+    color : rgb(132, 132, 132);
+}
+
+.content {
+    background-color: rgb(65, 64, 64);
+    
+    margin : 4px;
+    padding: 4px;
+    overflow: hidden;
+    
+    box-shadow: 1px 1px 2px 1px #1e1d1d inset;
+}
+
+.dark-grey {
+    background-color: rgb(36, 35, 36);
+}
+
+.light-grey {
+    background-color: rgb(65, 64, 64);
+}
+
+.section-darker {
+    background-color: rgb(52, 51, 52);
+    box-shadow: inset  0px -4px 0.5px -2px #121212,
+                inset  5px  0px 2px -2.5px #1f1f1f,
+                inset -3px  0px 1px -1.5px #292929,
+                inset  0px  4px 1px -2px #515050;
+    border-radius: 3px;
+    cursor: pointer;
+    font-weight: 600;
+    padding: 8px 12px 8px 12px;
+    color: #a7a7a7;
+    white-space: nowrap;
+}
+
+.section-darker:hover {
+    background-color: rgb(241, 190, 100);
+    color : rgb(120, 8, 4);
+    box-shadow: inset  0px -4px 0.5px -2px #121212,
+                inset  5px  0px 2px -2.5px #1f1f1f,
+                inset -3px  0px 1px -1.5px #292929,
+                inset  0px  4px 1px -2px #515050;
+}
+
+.section-darker.selected {
+    background-color: rgb(241, 190, 100);
+}
+
+.mod-detail {
+    background-color: rgb(65, 64, 64);
+    
+    margin : 4px;
+    padding: 4px;
+    overflow: hidden;
+    
+    box-shadow: 1px 1px 2px 1px #1e1d1d inset;
+}
+
+button {
+    background-color: rgb(94, 182, 99);
+    box-shadow: 1px 1px 2px 1px #242724 outset;
+    margin : 5px;
+    padding-left: 12px;
+    padding-right: 12px;
+    font-weight: bold;
+}
+
+button:hover {
+    background-color: rgb(146, 232, 151);
+    cursor: pointer;
+}
+
+div.checkbox {
+    box-shadow: 1px 1px 2px 1px #1e1d1d inset;
+    background-color: rgb(142, 142, 142);
+    
+    width: 18px;
+    height: 18px;
+}
+
+div.checkbox:hover {
+    background-color : rgb(227, 152, 39);
+}
+
+div.checkbox.checked {
+    background-color : rgb(227, 152, 39);
+}
+
+.material-symbols-outlined {
+    color : black;
+    text-align: center;
+    position: relative;
+    left: 1px;
+    top: 1px;
+}
+
+.convex {
+    box-shadow: inset  0px -4px 0.5px -2px #121212,
+                inset  5px  0px 2px -2.5px #1f1f1f,
+                inset -3px  0px 1px -1.5px #292929,
+                inset  0px  4px 1px -2px #515050;
+}
+
+.concave {
+    box-shadow: 1px 1px 2px 1px #1e1d1d inset;
+}
+
+.textplace {
+    margin: 4px;
+    padding: 8px;
+    background-color: var(--color-textplace);
+    box-shadow: 1px 1px 2px 1px #1e1d1d inset;
+    color : black;
+}
+
+hr {
+    width : 100%;
+    height: 2px;
+    background-color: rgb(56, 55, 56);
+    border: none;
+    box-shadow: 0px 1px 0px 0px rgb(87, 86, 86);
+}
+
+input.metadata {
+    width : 100px;
+    margin: 0px 12px 0px 8px;
+}
+
+
+.footer {
+    margin-top: auto;
+}
+
+.scrollbar::-webkit-scrollbar {
+    width: 5px;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+    background: rgb(129, 129, 129, 0.5);
+    border-radius: 2px;
+}
+
+.scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgb(212, 141, 39, 0.8);
+}
+
+.scrollbar::-webkit-scrollbar-track {
+    background: rgb(51, 48, 48);
+}
+
+.orange {
+    color: #ffa200;
+}
