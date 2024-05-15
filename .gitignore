@@ -18,7 +18,8 @@ yarn-error.log*
 env/
 
 /crawl-factoriomods/thumbnails/*.png
+__pycache__/
 
-data.json
+validation.py
 failed.txt
-modlist.txt
+test.py

@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
+import argparse
 import os, sys
 import json
 from typing import Final
 import requests
 from bs4 import BeautifulSoup
+from queue import PriorityQueue
+import tools
 
 URL:Final = 'https://mods.factorio.com/mod/'
 SELECTOR_TITLE:Final = 'body > div.container > div > div.panel.pt0.pb0.mb32 > div.panel-inset-lighter.flex-column.p0 > div.flex.z1 > div.panel-inset-lighter.m0.w100p.mr2 > div > div.w100p > h2 > a'
@@ -18,62 +21,77 @@ def download_image(filename:str, url:str):
 
 os.makedirs('thumbnails', exist_ok=True)
 
+parser = argparse.ArgumentParser()
+parser.add_argument('modlist', help='')
+parser.add_argument('dest', help='Result')
+parser.add_argument('-s', '--sort', action='store_true', help='Sorts DEST in the order of the MODLIST. Elements not in MODLIST will remain in place')
+parser.add_argument('--thumnail', default='./thumbnails', help='directory path to download thumnails')
+parser.add_argument('--update-format', action='store_true')
+parser.add_argument('--verbose', action='store_true')
+
+# https://gall.dcinside.com/mgallery/board/view/?id=factorio&no=57941
+
 if __name__ == "__main__":
-    existed = set()
-    result = []
-    failed = []
-    if len(sys.argv) <= 2:
-        sys.stderr.write(f'Using: {sys.argv[0]} <modlist> <result>\n')
-        exit(1)
+    args = parser.parse_args()
     
+    data = []
+    existed = set()
     try:
-        with open(sys.argv[2], 'r', encoding='utf-8') as f:
-            result = json.load(f)
-            for item in result:
+        with open(args.dest, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+            for item in data:
                 existed.add(item['mod'])
     except FileNotFoundError:
         pass
     
-    with open(sys.argv[1], 'r', encoding='utf-8') as f:
-        lines = f.readlines()
+    mods = []
+    try:
+        with open(args.modlist, 'r', encoding='utf-8') as f:
+            mods = [mod.strip() for mod in f.readlines()]
+    except FileNotFoundError:
+        sys.stderr.write(f"[ERROR] could not open modlist {args.modlist}\n")
+        sys.stderr.write(f"exit\n")
+        exit(1)
 
-    for line in lines:
-        mod = line.strip()
+    if args.sort:
+        data = tools.sort.sort_by_list(data, mods)
+
+    added = []
+    failed = []
+    skipped = []
+    for mod in mods:
         if mod == '':
             continue
         elif mod in existed:
-            print(f'skip: {mod} (exists)')
+            skipped.append(mod)
             continue
+        
+        try:
+            modinfo = tools.crawling.get_modinfo(mod)
+            added.append(modinfo)
 
-        siteurl = URL + mod
-        response = requests.get(siteurl)
-
-        if response.status_code != 200:
-            sys.stderr.write(f"Parse Failed: '{mod}' ({response.status_code})\n")
+            thumbnail = modinfo['thumbnail']
+            if thumbnail:
+                if not tools.crawling.download_thumnail(f'./thumbnails/{thumbnail}', mod=mod):
+                    sys.stderr.write(f'[WARNING] {mod} : couldn\'t download thumbnail\n')
+            else:
+                sys.stderr.write(f'[INFO] {mod} : no thumnail\n')
+        except tools.exceptions.ResponseFail as e:
+            sys.stderr.write(f"[ERROR] '{mod}' response failed\n")
             failed.append(mod)
-        else :
-            html = response.text
-            soup = BeautifulSoup(html, 'html.parser')
-            name = soup.select_one(SELECTOR_TITLE).get_text()
-            author = soup.select_one(SELECTOR_AUTHOR).get_text()
-            description = soup.select_one(SELECTOR_DESC).get_text()
-            img = soup.select_one(SELECTOR_THUMBNAIL)
-            
-            thumbnail = f'{mod}.png'
-            download_image(f'./thumbnails/{thumbnail}', img['src'])
-            
-            result.append({
-                'name' : name,
-                'mod' : mod,
-                'site' : siteurl,
-                'author' : author,
-                'descriptions' : [description],
-                'version' : '',
-                'thumbnail' : thumbnail,
-            })
-
-    output = json.dumps(result, indent=4)
-    with open('data.json', 'w', encoding='utf-8') as f:
+        except Exception as e:
+            sys.stderr.write(f'[ERROR] {mod} : unhandle exception occured\n')
+            sys.stderr.write(f'- {type(e)} : {e}')
+            failed.append(mod)
+    
+    data.extend(added)
+    output = json.dumps(data, indent=4)
+    with open(args.dest, 'w', encoding='utf-8', ensure_ascii=False) as f:
         f.write(output)
-    with open('failed.txt', 'w', encoding='utf-8') as f:
-        f.writelines(failed)
+    
+    count_added = len(added)
+    count_failed = len(failed)
+    count_skipped = len(skipped)
+    sys.stdout.write(f'Add: {count_added}\n')
+    sys.stdout.write(f'Fail: {count_failed}\n')
+    sys.stdout.write(f'Skip: {count_skipped}\n')

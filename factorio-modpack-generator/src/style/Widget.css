@@ -11,10 +11,11 @@
 }
 
 .draggable {
-  -webkit-user-select: unset; /* Safari */
-  -moz-user-select: unset; /* Firefox */
-  -ms-user-select: unset; /* IE10+/Edge */
-  user-select: unset; /* Standard */
+  -webkit-user-select: text; /* Chrome/Safari */
+  -moz-user-select: text; /* Firefox */
+  -ms-user-select: text; /* IE/Edge */
+  user-select: text;
+  cursor: text;
 }
 
 .box {

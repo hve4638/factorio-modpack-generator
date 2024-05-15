@@ -8,6 +8,8 @@
     --color-dark-grey : rgb(36, 35, 36);
     --color-textplace : rgb(233, 232, 229);
     --color-background : rgb(49, 48, 49);
+    --color-hover : rgb(252, 161, 0);
+    --color-hover-darker : rgb(219, 143, 0);
 }
 
 body {
@@ -30,9 +32,10 @@ p.title {
     font-weight : bold;
 }
 
-p.grey {
+.grey {
     color : rgb(132, 132, 132);
 }
+
 
 .content {
     background-color: rgb(65, 64, 64);
@@ -77,6 +80,11 @@ p.grey {
 
 .section-darker.selected {
     background-color: rgb(241, 190, 100);
+    color : rgb(120, 8, 4);
+    box-shadow: inset  0px -4px 0.5px -2px #121212,
+                inset  5px  0px 2px -2.5px #1f1f1f,
+                inset -3px  0px 1px -1.5px #292929,
+                inset  0px  4px 1px -2px #515050;
 }
 
 .mod-detail {
@@ -159,7 +167,6 @@ input.metadata {
     margin: 0px 12px 0px 8px;
 }
 
-
 .footer {
     margin-top: auto;
 }
@@ -183,4 +190,105 @@ input.metadata {
 
 .orange {
     color: #ffa200;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.short-description {
+    color: rgb(109, 109, 109);
+    font-size: 0.9em;
+    padding-left : 10px;
+    overflow-x : hidden;
+}
+
+.red {
+    color : rgb(205, 132, 135);
+}
+
+.blue {
+    color : rgb(129, 181, 199);
+}
+
+.yellow {
+    color : rgb(237, 198, 87);
+}
+
+.modtag {
+    border-radius: 4px;
+    color: rgb(167, 167, 167);
+    font-weight: bold;
+    font-size: 13px;
+    background-color: #292929;
+    padding : 3px 10px 4px 10px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    transition: background-color 0.1s;
+    margin-right: 5px; 
+    
+    box-shadow: inset  0px -4px 0.5px -2px #121212,
+                inset  5px  0px 2px -2.5px #1f1f1f,
+                inset -3px  0px 1px -1.5px #292929,
+                inset  0px  4px 1px -2px #515050;
+    cursor: pointer;
+}
+
+.modtag.disabled {
+    background-color: rgb(44, 44, 44);
+    color: rgb(62, 62, 62);
+}
+
+.modtag.enabled {
+    background-color: rgb(52, 52, 52);
+}
+
+.modtag:hover {
+    background-color: var(--color-hover);
+    color: rgb(122, 122, 122);
+}
+.modtag.disabled:hover {
+    background-color: var(--color-hover-darker);
+}
+
+.modtag.unselectable:hover {
+    background-color: #333333;
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+#tags {
+    margin : 8px;
+    flex-wrap: wrap;
+    overflow-y: scroll;
+}
+
+.tag-popover {
+    background-color: var(--color-accent-sub);
+    color: black;
+    font-weight: bold;
+    font-size: 12px;
+    padding: 6px;
+    position: absolute;
+    pointer-events: none;
+}
+
+#link-github {
+    cursor: pointer;
+}
+
+#link-github img {
+    transform: scale(1.0);
+    transition: transform 0.1s;
+}
+
+#link-github:hover img {
+    transform: scale(0.9);
 }

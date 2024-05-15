@@ -90,3 +90,8 @@ div, header, footer, main, aside, nav {
 .bold {
   font-weight: bold;
 }
+
+button.blue {
+  background-color: rgb(0, 88, 128);
+  color: white;
+}

@@ -1,0 +1,2 @@
+class ResponseFail(Exception):
+    pass
