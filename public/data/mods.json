@@ -1,11 +1,11 @@
-export const mods = [
+[
     {
         "name": "P.U.M.P.",
         "mod": "pump",
         "site": "https://mods.factorio.com/mod/pump",
         "author": "Xcone",
         "descriptions": [
-            "원유 위 시추기 배치 청사진을 생성하는 선택 도구를 숏컷에 추가합니다.",
+            "원유 위 시추기 배치 청사진을 생성하는 선택 도구를 숏컷에 추가합니다."
         ],
         "version": "",
         "thumbnail": "pump.png",
@@ -50,7 +50,7 @@ export const mods = [
             "손에 아이템을 들고 #B쉬프트 + 드래그#W 으로 상자, 용광로, 포탑에 균등하게 넣습니다.",
             "",
             "#B쉬프트 + 좌클릭#W 시 손에 든 아이템 기준으로 균등하게 분배합니다.",
-            "#B쉬프트 + 우클릭#W 시 내부에 든 아이템까지 고려해 균등하게 분배합니다.",
+            "#B쉬프트 + 우클릭#W 시 내부에 든 아이템까지 고려해 균등하게 분배합니다."
         ],
         "version": "",
         "thumbnail": "EvenDistributionLite.png",
@@ -63,7 +63,7 @@ export const mods = [
         "site": "https://mods.factorio.com/mod/BottleneckLite",
         "author": "raiguard",
         "descriptions": [
-            "공장의 현재 동작 상태를 쉽게 파악 할 수 있습니다.",
+            "공장의 현재 동작 상태를 쉽게 파악 할 수 있습니다."
         ],
         "version": "",
         "thumbnail": "BottleneckLite.png",
@@ -76,7 +76,7 @@ export const mods = [
         "site": "https://mods.factorio.com/mod/belt-visualizer",
         "author": "_CodeGreen",
         "descriptions": [
-            "#BH#W 를 눌러 벨트의 경로를 시각화하여 보여줍니다.",
+            "#BH#W 를 눌러 벨트의 경로를 시각화하여 보여줍니다."
         ],
         "version": "",
         "thumbnail": "belt-visualizer.png",
@@ -89,7 +89,7 @@ export const mods = [
         "site": "https://mods.factorio.com/mod/PipeVisualizer",
         "author": "raiguard",
         "descriptions": [
-            "#BH#W 를 눌러 파이프의 경로를 시각화하여 보여줍니다.",
+            "#BH#W 를 눌러 파이프의 경로를 시각화하여 보여줍니다."
         ],
         "version": "",
         "thumbnail": "PipeVisualizer.png",
@@ -275,11 +275,11 @@ export const mods = [
         "author": "npo6ka",
         "descriptions": [
             "아이템의 제작법과 그 아이템의 사용처를 확인할 수 있는 인터페이스를 추가합니다.",
-            "#YRecipe Book#W 과 유사합니다"
+            "#BRecipe Book#W 과 유사합니다"
         ],
         "version": "",
         "thumbnail": "FNEI.png",
-        "tags": ["레시피", "검색", ],
+        "tags": ["레시피", "검색" ],
         "short_description": "아이템 레시피"
     },
     {
@@ -289,11 +289,11 @@ export const mods = [
         "author": "raiguard",
         "descriptions": [
             "개체, 유체, 품목, 제작법 및 기술에 대한 정보를 검색할 수 있는 인터페이스를 추가합니다.",
-            "#YFENI#W 와 유사합니다."
+            "#BFENI#W 와 유사합니다."
         ],
         "version": "",
         "thumbnail": "RecipeBook.png",
-        "tags": ["레시피", "검색", ],
+        "tags": ["레시피", "검색" ],
         "short_description": "아이템 레시피"
     },
     {
@@ -843,7 +843,7 @@ export const mods = [
         "version": "",
         "thumbnail": "LogisticTrainNetwork.png",
         "tags": ["기차", "LTN"],
-        "short_description": "기차 물류 네트워크"
+        "short_description": "물류 기차 네트워크"
     },
     {
         "name": "LTN Cleanup",
@@ -907,7 +907,7 @@ export const mods = [
         "site": "https://mods.factorio.com/mod/LTN_Language_Pack",
         "author": "Shadow_Man",
         "descriptions": [
-            "#YProject Cybersyn - Logistics Train Dispatcher의 애드온#W",
+            "#YLTN - Logistic Train Network의 애드온#W",
             "Localizations for LTN, LTN Manager, LTN Cleanup, LTN Combinator, LTN Combinator Modernized, LTN Content Reader, Space Exploration LTN integration mods.\r\n\r\nLocales included: Brazilian Portuguese, Catalan, Chinese Simplified, Czech, German, Italian, Japanese, Polish, Russian, Spanish, Ukrainian.\r\n\r\nContribute on Crowdin (link in mod info page).\n          "
         ],
         "version": "",
@@ -929,7 +929,7 @@ export const mods = [
         "version": "",
         "thumbnail": "cybersyn.png",
         "tags": ["기차", "사이버신"],
-        "short_description": "기차 물류 네트워크"
+        "short_description": "물류 기차 네트워크"
     },
     {
         "name": "Cybersyn Combinator",
@@ -1287,7 +1287,7 @@ export const mods = [
         "site": "https://mods.factorio.com/mod/OreEraser",
         "author": "CaptainWHot",
         "descriptions": [
-            "사용하지 않는 광맥을 제거할 수 있는 숏컷 선택 도구를 추가합니다.",
+            "사용하지 않는 광맥을 제거할 수 있는 숏컷 선택 도구를 추가합니다."
         ],
         "version": "",
         "thumbnail": "OreEraser.png",

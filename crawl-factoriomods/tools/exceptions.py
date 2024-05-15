@@ -1,2 +1,0 @@
-class ResponseFail(Exception):
-    pass

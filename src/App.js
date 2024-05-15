@@ -6,22 +6,36 @@ import UnfoldIcon from './Icons/unfold.svg';
 import FoldIcon from './Icons/fold.svg';
 import GitHubMark from './Icons/github-mark.png';
 import SearchIcon from './Icons/search.svg';
-import {tagInfo} from './Data/Tags.js';
-import {mods} from './Data/Mods.js';
+//import {tagInfo} from './Data/Tags.js';
+//import {mods} from './Data/Mods.js';
 import {download} from './Utils/FileDownload.js';
 import {downloadModPack} from './GenerateModPack.js';
 import {stringHasNaively, setHasAny} from './Utils.js';
 
 const GITHUB_LINK='https://github.com/hve4638/factorio-modpack-generator'
 
-const SITE_TITLE = '이름미정';
-const BASE_PATH = '/assets/deploy/factorio-modpack-generator';
+const SITE_TITLE = 'Factorio ModPack Generator';
+const BASE_PATH = '/deploy/factorio-modpack-generator';
 const THUMBNAIL_PATH = 'thumbnails';
 const NOTAG = '태그 없음'
 
 let enablePopover = (text) => {}
 let disablePopover = () => {}
 let setPopoverPosition = (x,y) => {}
+
+let mods = [];
+let tagInfo = [];
+
+async function loadData() {
+  {
+    const response = await fetch(`${BASE_PATH}/data/mods.json`);
+    mods = await response.json();
+  }
+  {
+    const response = await fetch(`${BASE_PATH}/data/tags.json`);
+    tagInfo = await response.json();
+  }
+}
 
 function App() {
   const [metadata, setMetadata] = useState({
@@ -65,7 +79,7 @@ function App() {
       }
       
       if (mod.tags.length == 0 && searchNoTagged) {
-
+        // pass
       }
       else if (selectedTags.size != 0 && !setHasAny(mod.tags, selectedTags)) {
         continue;
@@ -77,24 +91,32 @@ function App() {
   }, [search, selectedTags])
 
   useEffect(()=>{
-    enablePopover = (text) => {
-      setPopoverEnabled(true);
-      setPopoverText(text);
-    }
-    disablePopover = () => setPopoverEnabled(false);
-    setPopoverPosition = (x, y) => {
-      setPopoverX(x);
-      setPopoverY(y);
+    const load = async () => {
+      await loadData();
+      enablePopover = (text) => {
+        if (text !== undefined) {
+          setPopoverEnabled(true);
+          setPopoverText(text);
+        }
+      }
+      disablePopover = () => setPopoverEnabled(false);
+      setPopoverPosition = (x, y) => {
+        setPopoverX(x + 20);
+        setPopoverY(y + 10);
+      }
+  
+      const newtags = new Set();
+      for (const mod of mods) {
+        for (const tag of mod.tags) {
+          newtags.add(tag);
+        }
+      }
+      newtags.add(NOTAG)
+      setTags(newtags);
+      setModlist(mods);
     }
 
-    const newtags = new Set();
-    for (const mod of mods) {
-      for (const tag of mod.tags) {
-        newtags.add(tag);
-      }
-    }
-    newtags.add(NOTAG)
-    setTags(newtags);
+    load();
   }, []);
   
 
@@ -152,8 +174,9 @@ function App() {
             <p className='title noflex' style={{ margin : '8px 8px 0px 8px'}}>태그</p>
             <div id='tags' className='row scrollbar'>
               {
-                [...tags].map((key)=>(
+                [...tags].map((key, index)=>(
                   <div
+                    key={index}
                     className={`modtag${
                       selectedTags.size == 0
                       ? ''
@@ -175,6 +198,9 @@ function App() {
 
                       setSelectedTags(selected);
                     }}
+                    onMouseEnter={() => enablePopover(tagInfo[key]?.descriptions[0])}
+                    onMouseLeave={() => disablePopover()}
+                    onMouseMove={(e) => setPopoverPosition(e.clientX, e.clientY)}
                   >
                     {key}
                   </div>
@@ -385,7 +411,7 @@ function ModDetail({data}) {
                     onMouseEnter={() => enablePopover(tagInfo[tag].descriptions[0])}
                     onMouseLeave={() => disablePopover()}
                     onMouseMove={(e)=>{
-                      setPopoverPosition(e.clientX + 20, e.clientY + 10);
+                      setPopoverPosition(e.clientX, e.clientY);
                     }}
                   >
                     {tag}
@@ -407,7 +433,7 @@ function MetaData({metadata, onChange}) {
     onChange(updated);
   }
   return (
-    <div className='column noflex draggable' style={{ margin: '8px' }}>
+    <div className='column noflex' style={{ margin: '8px' }}>
       <div className='row subaxis-center' style={{height : '32px'}}>
         <InputField
           title='모드팩 이름'
