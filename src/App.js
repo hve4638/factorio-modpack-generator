@@ -262,14 +262,14 @@ function App() {
               }
             }
           >
-            <span className='center' style={{paddingRight: "4px"}}>Export</span>
+            <span className='center' style={{paddingRight: "4px"}}>Export (json)</span>
             <span className="material-symbols-outlined" style={{fontSize:'18px'}}>description</span>
           </button>
           <button 
             className='row center'
             onClick={()=>downloadModPack(currentInfo)}
           >
-            <span className='center' style={{paddingRight: "4px"}}>Export</span>
+            <span className='center' style={{paddingRight: "4px"}}>Export (zip)</span>
             <span className="material-symbols-outlined" style={{fontSize:'18px'}}>folder_zip</span>
           </button>
         </div>

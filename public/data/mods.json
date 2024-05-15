@@ -1078,7 +1078,7 @@
         ],
         "version": "",
         "thumbnail": "0-event-trace.png",
-        "tags": ["디버깅"],
+        "tags": ["디버그"],
         "short_description": ""
     },
     {
@@ -1092,7 +1092,7 @@
         ],
         "version": "",
         "thumbnail": "gvv.png",
-        "tags": ["디버깅"],
+        "tags": ["디버그"],
         "short_description": ""
     },
     {
