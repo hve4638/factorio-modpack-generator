@@ -387,7 +387,7 @@
         ],
         "version": "",
         "thumbnail": "LogisticRequestManager.png",
-        "tags": [],
+        "tags": ["기능 추가"],
         "short_description": "개인 물류 요청 저장 및 불러오기"
     },
     {
@@ -587,7 +587,7 @@
         ],
         "version": "",
         "thumbnail": "Milestones.png",
-        "tags": [],
+        "tags": ["기능 추가"],
         "short_description": "특별한 목표 생성 및 시간 기록"
     },
     {
@@ -600,7 +600,7 @@
         ],
         "version": "",
         "thumbnail": "ModuleInserter.png",
-        "tags": ["QoL", "기능 추가"],
+        "tags": ["기능 추가"],
         "short_description": ""
     },
     {
@@ -626,7 +626,7 @@
         ],
         "version": "",
         "thumbnail": "Tapeline.png",
-        "tags": ["QoL"],
+        "tags": ["QoL", "기능 추가"],
         "short_description": ""
     },
     {
@@ -662,11 +662,17 @@
         "site": "https://mods.factorio.com/mod/CursorEnhancements",
         "author": "raiguard",
         "descriptions": [
-            "커서에 다양한 도구와 단축키를 추가합니다."
+            "커서에 다양한 기능을 추가합니다.",
+            "",
+            "설치 중 아이템 소진시 자동으로 고스트 설치로 전환합니다.",
+            "#BCtrl + Q#W 으로 선택한 아이템을 제작합니다.",
+            "#BShift + Q#W 으로 마지막으로 선택한 아이템을 선택합니다.",
+            "#BShift + 휠 올림/내림#W 으로 선택한 아이템을 같은 그룹의 다른 아이템으로 전환할 수 있습니다.",
+            "GUI 인터페이스에서 #BQ#W 로 아이템을 선택합니다.."
         ],
         "version": "",
         "thumbnail": "CursorEnhancements.png",
-        "tags": [],
+        "tags": ["기능 추가"],
         "short_description": ""
     },
     {
@@ -701,7 +707,7 @@
         "site": "https://mods.factorio.com/mod/Shortcuts-ick",
         "author": "ickputzdirwech",
         "descriptions": [
-            "수십여개의 숏컷을 추가합니다.",
+            "여러가지 숏컷을 추가합니다.",
             "모드 시작 설정에서 필요하지 않은 숏컷을 비활성화 할 수 있습니다."
         ],
         "version": "",
@@ -1158,7 +1164,7 @@
         ],
         "version": "",
         "thumbnail": "CrampedContainer.png",
-        "tags": [],
+        "tags": ["기능 추가", "최적화"],
         "short_description": "상자 크기 제한"
     },
     {
@@ -1282,7 +1288,7 @@
         "short_description": "미니맵 개선"
     },
     {
-        "name": "Ore Eraser (continued)",
+        "name": "Ore Eraser",
         "mod": "OreEraser",
         "site": "https://mods.factorio.com/mod/OreEraser",
         "author": "CaptainWHot",
@@ -1293,5 +1299,18 @@
         "thumbnail": "OreEraser.png",
         "tags": ["기능 추가"],
         "short_description": "광맥 제거"
+    },
+    {
+        "name": "Pump Anywhere",
+        "mod": "PumpAnywhere",
+        "site": "https://mods.factorio.com/mod/PumpAnywhere",
+        "author": "Mailbox23",
+        "descriptions": [
+            "해안 펌프를 물 옆이 아닌 땅 위에도 바로 설치할 수 있습니다."
+        ],
+        "version": "",
+        "thumbnail": "PumpAnywhere.png",
+        "tags": ["기능 추가"],
+        "short_description": "땅 위 펌프 설치"
     }
 ]

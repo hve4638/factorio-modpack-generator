@@ -6,11 +6,13 @@ import UnfoldIcon from './Icons/unfold.svg';
 import FoldIcon from './Icons/fold.svg';
 import GitHubMark from './Icons/github-mark.png';
 import SearchIcon from './Icons/search.svg';
+import UploadIcon from './Icons/upload.svg';
 //import {tagInfo} from './Data/Tags.js';
 //import {mods} from './Data/Mods.js';
 import {download} from './Utils/FileDownload.js';
 import {downloadModPack} from './GenerateModPack.js';
 import {stringHasNaively, setHasAny} from './Utils.js';
+import JSZip from 'jszip';
 
 const GITHUB_LINK='https://github.com/hve4638/factorio-modpack-generator'
 
@@ -68,6 +70,7 @@ function App() {
   const [popoverText, setPopoverText] = useState('');
   const [popoverX, setPopoverX] = useState(0);
   const [popoverY, setPopoverY] = useState(0);
+  const [modalImportEnabled, setModalImportEnabled] = useState(false);
 
   useEffect(() => {
     const newmodlist = [];
@@ -250,9 +253,18 @@ function App() {
             <img alt='link' src={GitHubMark} height='30px'/>
           </div>
           <div className='flex'></div>
+          <button 
+            className='row center blue'
+            onClick={()=>setModalImportEnabled(true)}
+          >
+            <span className='center' style={{paddingRight: "4px"}}>Import</span>
+            <span className="material-symbols-outlined" style={{fontSize:'18px'}}>upload</span>
+          </button>
+          
         </div>
         <div className='flex'>
           <div className='flex'></div>
+
           <button 
             className='row center'
             onClick={
@@ -279,6 +291,25 @@ function App() {
         <div id='mod-description' className='tag-popover convex' style={{left: popoverX, top: popoverY }}>
           {popoverText}
         </div>
+      }
+      {
+        modalImportEnabled &&
+        <ImportModal
+          onImport= {(data) => {
+            setModalImportEnabled(false);
+            
+            setMetadata({
+              factorio_version : data.factorio_version,
+              name : data.name,
+              title : data.title,
+              version : data.version,
+              author : data.author,
+              description : data.description,
+            });
+            setCheckedMod(new Set(data.dependencies));
+          }}
+          onCancel = {() => setModalImportEnabled(false)}
+        />
       }
     </div>
   );
@@ -485,7 +516,6 @@ function Checkbox({checked, onClick}) {
   );
 }
 
-
 function InputField({title, value, onChange}) {
   return (
     <div className='flex'>
@@ -496,6 +526,126 @@ function InputField({title, value, onChange}) {
       />
     </div>
   );
+}
+
+function ImportModal({ onImport, onCancel }) {
+  const [data, setData] = useState(null);
+  const [message, setMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [onFileHover, setOnFileHover] = useState(false);
+  const onDragEnter = () => {
+    setOnFileHover(true);
+  };
+  const onDragLeave = () => {
+    setOnFileHover(false);
+  };
+  const handleDragOver = (event) => {
+      event.preventDefault();
+  };
+  const parseFile = (file) => {
+    const reader = new FileReader();
+
+    if (file.name.slice(-5) == '.json') {
+      reader.onload = (e) => {
+        const content = e.target.result;
+        try {
+          const data = JSON.parse(content);
+          setData(data);
+          setMessage(`불러온 파일 : ${file.name}`);
+        }
+        catch(e) {
+          setMessage('');
+          setErrorMessage('잘못된 파일입니다');
+        }
+      }
+      reader.readAsText(file);
+    }
+    else if (file.name.slice(-4) == '.zip') {
+      reader.onload = function(e) {
+        const arrayBuffer = e.target.result;
+        
+        JSZip.loadAsync(arrayBuffer).then(function(zip) {
+          zip.forEach((path, entry) => {
+            if (path.match(/.*[/]info.*[.]json/)) {
+              entry.async("string").then(function(content) {
+                try {
+                  const data = JSON.parse(content);
+                  setData(data);
+                  setMessage(`불러온 파일 : ${file.name}`);
+                } catch (e) {
+                  setMessage('');
+                  setErrorMessage('잘못된 파일입니다');
+                }
+            });
+            }
+          })
+        }).catch(function(err) {
+          setMessage('');
+          setErrorMessage('잘못된 파일입니다');
+        });
+      };
+    }
+    else {
+      setMessage('');
+      setErrorMessage('잘못된 파일입니다');
+    }
+
+    reader.readAsArrayBuffer(file);
+  };
+
+  return (
+  <div className='modal'>
+    <div className='modpack-import convex column'>
+      <p className='title noflex'>파일 가져오기</p>
+      <div className='flex' style={{ margin:'4px 0px 4px 0px' }}>
+        <label
+          className={`filetransfer center clickable${onFileHover ? ' onfilehover' : ''}`}
+          onDragEnter={onDragEnter}
+          onDragLeave={onDragLeave}
+          onDragOver={handleDragOver}
+          onDrop={(event)=>{
+            event.preventDefault();
+            const file = event.dataTransfer.files[0];
+            if (file) {
+              parseFile(file);
+            }
+          }}
+        >
+          <input
+            type='file'
+            className='hide'
+            onChange={(event)=>{
+              const file = event.target.files[0];
+              if (file) {
+                parseFile(file);
+              }
+            }}
+          />
+          <img alt='' src={UploadIcon}/>
+        </label>
+      </div>
+      <p className='red small'>{errorMessage}</p>
+      <p className='green small'>{message}</p>
+      <div className='row' style={{height : '35px'}}>
+          <div className='flex'></div>
+          <button
+            className='row center red noflex'
+            style={{margin:'3px', padding:'0px 5px 0px 5px'}}
+            onClick = {(e)=>onCancel()}
+          >취소</button>
+          <button 
+            className={`row center noflex${data == null ? ' disabled' : ''}`}
+            style={{margin:'3px', padding:'0px 5px 0px 5px'}}
+            onClick = {(e) => {
+              if (data) {
+                onImport(data);
+              }
+            }}
+          >가져오기</button>
+      </div>
+    </div>
+  </div>
+  )
 }
 
 export default App;
